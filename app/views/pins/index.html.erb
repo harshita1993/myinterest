@@ -1,0 +1,17 @@
+<div class= "row pinterest-grid">
+  <%@pins.each do |pin| %>
+     <div class = "col-md-3 pin-item">
+        <div class="panel panel-default pin">
+        <div class="panel-body">
+           <%=image_tag pin.pin_image.url(:medium), class: 'img-responsive'%></div>
+        <div class="panel-footer"> <p><%= pin.description %></p>
+         <% if pin.user == current_user%>
+          <div> <%= link_to 'Edit', edit_pin_path(pin) %> | <%= link_to 'Delete', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+         </div>
+        <%end%>
+      </div>
+    </div>
+  </div>
+ <%end%>
+</div>
+
