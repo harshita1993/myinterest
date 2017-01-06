@@ -1,21 +1,43 @@
+<script src="https://use.fontawesome.com/36a918ee80.js"></script>
 <div class= "row pinterest-grid">
   <%@pins.each do |pin| %>
-     <div class = "col-md-3 pin-item">
+    <% unless pin.user.blank? %>
+      <div class = "col-md-3 pin-item">
         <div class="panel panel-default pin">
-        <div class="panel-body">
-           <%=link_to image_tag(pin.pin_image.url(:medium)),pin%>
-             </div>
-        <div class="panel-footer">
-        <p><strong><%=link_to pin.user.username ,user_path
-         pin.user.username)unless pin.user.blank?%></strong></p>
-         <p><%= pin.description %></p>
-         <% if pin.user == current_user%>
-          <div> <%= link_to 'Edit', edit_pin_path(pin) %> | <%= link_to 'Delete', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
-         </div>
-        <%end%>
+          <div class="panel-body">
+            <%=link_to image_tag(pin.pin_image.url(:medium)),pin %>
+          </div>
+          <div class="panel-footer">
+            <p><strong><%=link_to pin.user.username ,user_path(pin.user.username)unless pin.user.blank?%></strong></p>
+            <p><%= pin.description %></p>
+            <p>
+             <span class="fa fa-thumbs-o-up pull-left"></span><%= pin.likes.count %>
+            </p>
+              
+
+
+            <% if pin.user == current_user%>
+              <div>
+                  <%= link_to 'Edit', edit_pin_path(pin) %> 
+                  <%= link_to 'Delete', pin, method: :delete, data: { confirm: 'Are you sure?' } %>
+                   <%= link_to likes_pin_path(pin),class: "options btn btn-primary pull-right", method: :POST do %>
+                 <i class = "fa fa-thumbs-o-up pull-right" aria-hidden="true" ></i>
+                 <%end%>
+              </div>
+              <%end%>
+             <%if user_signed_in? && pin.user != current_user%>
+              <div>
+                <%= link_to 'Repost',repost_pin_path(pin), method: :POST, date: {confirm: 'Are you sure?'} %>
+                 <%= link_to likes_pin_path(pin),class: "options btn btn-primary pull-right", method: :POST do %>
+                 <i class = "fa fa-thumbs-o-up pull-right " aria-hidden="true" ></i>
+                 <%end%>
+
+              </div>
+           <% end %>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
- <%end%>
+    <%end%>
+  <%end%>
 </div>
 

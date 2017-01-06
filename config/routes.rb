@@ -2,10 +2,22 @@ Rails.application.routes.draw do
   
   devise_for :users
 
-  resources :pins 
+  resources :boards
+
+  resources :pins do
+  	#resources :comments
+  	member do
+  	 post '/repost' => 'pins#repost'
+  	end
+
+  	member do
+  	  post '/likes' => 'pins#like'
+  end
+end
+
+
   
-  
-get ':username' => 'users#show',as: 'user'
+ get ':username' => 'users#show',as: 'user'
 
   root 'home#index'
 

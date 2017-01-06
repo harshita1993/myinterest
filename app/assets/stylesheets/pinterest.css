@@ -1,5 +1,6 @@
 body{
 	padding-top: 75px;
+	background-image: url("bck2.jpg");
 }
 
 .panel-body{
@@ -7,6 +8,6 @@ body{
 }
 
 .pin img{
-	width:100%;
+	width:50%;
 }
 

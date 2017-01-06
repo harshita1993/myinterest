@@ -1,5 +1,5 @@
 class PinsController < ApplicationController
-  before_action :set_pin, only: [:show, :edit, :update, :destroy]
+  before_action :set_pin, only: [:show, :edit, :update, :destroy, :repost,:like]
   before_action  :authenticate_user!,except: [:index, :show]
   before_action :correct_user,only: [:edit,:update,:destroy]
   # GET /pins.json
@@ -12,17 +12,16 @@ class PinsController < ApplicationController
   def show
   end
 
-  # GET /pins/new
+  
   def new
     @pin = current_user.pins.build
   end
 
-  # GET /pins/1/edit
+  
   def edit
   end
 
-  # POST /pins
-  # POST /pins.json
+  
   def create
     @pin = current_user.pins.build(pin_params)
 
@@ -37,8 +36,7 @@ class PinsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /pins/1
-  # PATCH/PUT /pins/1.json
+  
   def update
     respond_to do |format|
       if @pin.update(pin_params)
@@ -60,6 +58,24 @@ class PinsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+
+  def repost
+    @pin.repost(current_user)
+    redirect_to pins_path
+  end
+
+  def like
+     @like= @pin.likes.build(user_id: current_user.id)
+      if @like.save
+        flash[:notice] = "you liked this pins"
+        redirect_to pins_path
+      else
+        flash[:notice] = "you have already liked this  pin."
+        redirect_to pins_path
+    end
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
