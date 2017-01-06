@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170106012921) do
+ActiveRecord::Schema.define(version: 20170106162924) do
 
   create_table "boards", force: :cascade do |t|
     t.string   "name"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20170106012921) do
     t.integer  "pin_image_file_size"
     t.datetime "pin_image_updated_at"
     t.integer  "original_pin_id"
+    t.integer  "board_id"
     t.index ["user_id"], name: "index_pins_on_user_id"
   end
 

@@ -7,6 +7,7 @@ class User < ApplicationRecord
   
    has_many :pins , dependent: :destroy
    has_many :likes, dependent: :destroy
+   has_many :boards
    has_many :liked_pins,through: :likes,source: :pin
    validates_uniqueness_of :username
    

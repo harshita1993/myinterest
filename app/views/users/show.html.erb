@@ -3,6 +3,19 @@
 </div>
 <h3><%= @user.username%></h3>
 <p> <%= @user.Bio%></p>
+<h2>My Board</h2>
+  <%@user.boards.each do |board| %>
+   <div>
+  <h2> <%= board.name%></h2>
+  <p><%= link_to 'edit',edit_board_path(board)%>
+    <%= link_to 'delete',board, method: :delete %>
+  </p>
+  </div>
+    <%end%>
+  
+
+
+<h1> My pins</h1>
 <div class= "row pinterest-grid">
   <%@user.pins.each do |pin| %>
     <% unless pin.user.blank?  %>
